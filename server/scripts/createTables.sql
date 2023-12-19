@@ -1,24 +1,26 @@
 -- drop tables 
-DROP TABLE IF EXISTS scrumBoard.junctionUserTeam;
+DROP TABLE IF EXISTS scrumBoard.user;
+DROP TABLE IF EXISTS scrumBoard.board;
+DROP TABLE IF EXISTS scrumBoard.junctionUserBoard;
 DROP TABLE IF EXISTS scrumBoard.item;
 DROP TABLE IF EXISTS scrumBoard.category;
-DROP TABLE IF EXISTS scrumBoard.user;
-DROP TABLE IF EXISTS scrumBoard.team;
+
 
 -- create tables
 create table scrumBoard.user (
 	id SERIAL PRIMARY KEY
-	,username VARCHAR(255) UNIQUE NOT NULL
+	,username VARCHAR(255) NOT NULL
+	,email VARCHAR(255) UNIQUE NOT NULL
 	,createdOn TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
-create table scrumBoard.team (
+create table scrumBoard.board (
 	id SERIAL PRIMARY KEY
-	,teamName VARCHAR(255) UNIQUE NOT NULL
+	,boardName VARCHAR(255) UNIQUE NOT NULL
 	,createdOn TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
-create table scrumBoard.junctionUserTeam (
+create table scrumBoard.junctionUserBoard (
 	teamId int not null references scrumBoard.team (id) -- FK
 	,userId int not null references scrumBoard.user (id) -- FK
 	,createdOn TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
