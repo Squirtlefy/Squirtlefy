@@ -1,6 +1,6 @@
-drop procedure if exists scrumBoard.createUser;
+drop procedure if exists scrumBoard.allUsers;
 
-create procedure scrumBoard.createUser (new_username varchar(255))
+create procedure scrumBoard.allUsers (new_username varchar(255))
 LANGUAGE plpgsql 
 AS $$
 BEGIN
@@ -14,4 +14,4 @@ BEGIN
 END;
 $$;
 
--- CALL scrumBoard.createUser('john');
+-- CALL scrumBoard.allUsers('john');
