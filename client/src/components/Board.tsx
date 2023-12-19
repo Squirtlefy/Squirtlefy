@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef, FormEvent } from 'react';
 
 const team = [
   'Austin Cavanagh',
@@ -48,12 +48,33 @@ const Board = () => {
   const [addList, setAddList] = useState(false);
   const [addCard, setAddCard] = useState(false);
 
-  //   const addListHandleclick = () => {
-  //     setAddList(true);
-  //   };
+  const formRef = useRef<HTMLFormElement>(null);
+  const listInputRef = useRef<HTMLInputElement>(null);
+  const cardInputRef = useRef<HTMLInputElement>(null);
 
-  const addCardHandleclick = () => {
-    setAddCard(true);
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (formRef.current && !formRef.current.contains(event.target as Node)) {
+        setAddList(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [formRef]);
+
+  const handleNewList = (event: FormEvent) => {
+    event.preventDefault();
+
+    if (listInputRef.current) {
+      console.log(listInputRef.current.value);
+    }
+
+    setAddList(false);
+    return;
   };
 
   return (
@@ -73,7 +94,7 @@ const Board = () => {
               })}
               <button
                 className="card add-card-button"
-                onClick={() => console.log('added card')}
+                onClick={() => setAddCard(true)}
               >
                 + Add Card
               </button>
@@ -81,15 +102,19 @@ const Board = () => {
           );
         })}
 
-        {!addList && (
+        {!addList ? (
           <button className="add-list-button" onClick={() => setAddList(true)}>
             + Add List
           </button>
-        )}
-
-        {addList && (
-          <form className="list" onSubmit={addCardHandleclick}>
-            <input className="add-list-input" type="text" />
+        ) : (
+          <form className="list" onSubmit={handleNewList} ref={formRef}>
+            <input
+              className="add-list-input"
+              ref={listInputRef}
+              type="text"
+              placeholder="Enter List Name..."
+              autoFocus
+            />
             <div className="add-list-bottom">
               <button className="submit-button">Add List</button>
               <button className="cancel-button">X</button>

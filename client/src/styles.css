@@ -96,14 +96,23 @@
   font-size: 0.9rem;
   outline: none;
   padding: 0.5rem;
-  border-radius: 0.2rem;
+  border-radius: 0.3rem;
   background-color: #0f1206ff;
-  color: #a0aebdff;
+  color: #b6c2cfff;
   font-weight: 500;
 }
 
 .add-list-input:focus {
   border: 2px solid #579dff;
+}
+
+.add-list-input:hover {
+  border: 2px solid #579dff;
+  background-color: #22272bff;
+}
+
+.add-list-input::placeholder {
+  color: currentColor;
 }
 
 .add-list-bottom {
