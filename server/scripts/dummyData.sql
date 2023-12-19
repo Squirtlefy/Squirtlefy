@@ -34,27 +34,48 @@
 	
 	
 -- ******* List ******
-insert into scrumBoard.list (listName, listOrder, boardId) 
-SELECT 'first list'
-	,1
-	,b.id
-FROM scrumBoard.board b
-where b.id = 1
+-- insert into scrumBoard.list (listName, listOrder, boardId) 
+-- SELECT 'first list'
+-- 	,1
+-- 	,b.id
+-- FROM scrumBoard.board b
+-- where b.id = 1;
 
-insert into scrumBoard.list (listName, listOrder, boardId) 
-SELECT 'second list'
-	,2
-	,b.id
-FROM scrumBoard.board b
-where b.id = 1
+-- insert into scrumBoard.list (listName, listOrder, boardId) 
+-- SELECT 'second list'
+-- 	,2
+-- 	,b.id
+-- FROM scrumBoard.board b
+-- where b.id = 1;
 
-insert into scrumBoard.list (listName, listOrder, boardId) 
-SELECT 'third list'
-	,3
-	,b.id
-FROM scrumBoard.board b
-where b.id = 1
+-- insert into scrumBoard.list (listName, listOrder, boardId) 
+-- SELECT 'third list'
+-- 	,3
+-- 	,b.id
+-- FROM scrumBoard.board b
+-- where b.id = 1;
+
+-- select * from scrumBoard.list;
+
 -- ******* Card *******
+-- insert into scrumBoard.card (cardName, cardOrder, listId) VALUES
+-- 	('test1', 1, 1),
+-- 	('test2', 2, 1),
+-- 	('test3', 3, 1);
 
+-- select * from scrumBoard.card;
 -- ******** junctionCardsAssignedUsers ******
+-- insert into scrumBoard.junctionCardsAssignedUsers (cardId, userId) VALUES
+-- 	(1,1),
+-- 	(1,2),
+-- 	(1,3),
+-- 	(2,2),
+-- 	(2,3);
+	
+
+-- select *
+-- from scrumBoard."user" u
+-- 	join scrumboard.junctioncardsassignedusers jca on u.id = jca.userid
+-- 	join scrumboard.card c on c.id = jca.cardId;
+	
 	
