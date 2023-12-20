@@ -18,8 +18,8 @@ const user = {
 
   getUsersByBoard: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { id } = req.params;
-      const users = await pool.query('SELECT scrumBoard.getUsersByBoard($1)', [id]);
+      const { boardId } = req.params;
+      const users = await pool.query('SELECT scrumBoard.getUsersByBoard($1)', [boardId]);
       console.log(users);
       res.locals.users = users.rows;
       return next();
