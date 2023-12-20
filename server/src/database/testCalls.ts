@@ -28,7 +28,7 @@ const testQueries = {
   getAllUsers: async (req: Request, res: Response, next: NextFunction) => {
     try {
       // get first 100 from res.locals and insert here
-      const result = await pool.query('SELECT scrumBoard.getUsers($1)');
+      const result = await pool.query('SELECT scrumBoard.getUsers()');
       console.log(result);
       res.locals.test = result;
       return next();

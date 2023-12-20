@@ -2,6 +2,7 @@ const { google } = require('googleapis');
 const cors = require('cors');
 import express, { Request, Response, NextFunction } from "express";
 import testQueries from './database/testCalls'
+import apiRouter from './routes/api'
 
 const PORT = 3000;
 const app = express();
@@ -10,6 +11,15 @@ app.use(express.json());
 app.use(cors());
 // client_ID = '207130399105-liobtrmdselqr1um3qe1188d2c2djnrn.apps.googleusercontent.com'
 // client_SECRET = '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'
+
+// test route
+app.get('/test',  testQueries.test,  (req: any, res: any) => {
+  res.status(200).json(res.locals.test)
+})
+
+// router
+app.use('/api', apiRouter);
+
 
 const oauth2Client = new google.auth.OAuth2(
   '207130399105-liobtrmdselqr1um3qe1188d2c2djnrn.apps.googleusercontent.com',
@@ -60,11 +70,6 @@ app.get('/login', async (req: any, res: any) => {
 
   res.redirect('http://localhost:5173/');
 });
-
-// test route
-app.get('/test',  testQueries.test,  (req: any, res: any) => {
-  res.status(200).json(res.locals.test)
-})
 
 // basic error handler
 app.use((err, req, res, next) => {
