@@ -11,11 +11,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// test route
-app.get('/test',  testQueries.test,  (req: any, res: any) => {
-  res.status(200).json(res.locals.test)
-})
-
 // router
 app.use('/api', apiRouter);
 
