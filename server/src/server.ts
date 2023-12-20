@@ -1,20 +1,24 @@
 const { google } = require('googleapis');
 const cors = require('cors');
 require('dotenv').config();
-const user = require('./controllers/user')
-import express, { Request, Response, NextFunction } from "express";
-import testQueries from './database/testCalls'
-import apiRouter from './routes/api'
+import user from './controllers/user';
+import express, { Request, Response, NextFunction } from 'express';
+import testQueries from './database/testCalls';
+import apiRouter from './routes/api';
 
 const PORT = 3000;
 const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+  })
+);
 
 // router
 app.use('/api', apiRouter);
-
 
 const oauth2Client = new google.auth.OAuth2(
   process.env.CLIENT_ID,
@@ -24,7 +28,7 @@ const oauth2Client = new google.auth.OAuth2(
 
 // set auth as a global default
 google.options({
-  auth: oauth2Client
+  auth: oauth2Client,
 });
 
 oauth2Client.on('tokens', (tokens) => {
@@ -61,26 +65,25 @@ app.get('/login', async (req: any, res: any) => {
   const data = await response.json();
   console.log('data: ', data);
 
-  const result = await user.createUser(data.name, data.email, data.id, data.picture);
+  const result = await user.createUser(
+    data.name,
+    data.email,
+    data.id,
+    data.picture
+  );
   console.log(result);
+
   if (result === -1) {
     res.status(500).send('Error creating user');
   }
 
-  res.redirect(`http://localhost:5173/?data=${JSON.stringify(data)}`);
+  res.redirect(`http://localhost:5173/?data=${JSON.stringify(data.email)}`);
 });
-
-
-app.post('/getUser', (req: any, res: any) => {
-  res.status(200).send({ hi: 'hello'})
-});
-
 
 // basic error handler
 app.use((err, req, res, next) => {
   res.status(500).send('Error');
 });
-
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
