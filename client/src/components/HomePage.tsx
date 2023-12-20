@@ -1,4 +1,8 @@
+import { useSearchParams } from "react-router-dom";
+
 const HomePage = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  console.log(searchParams.get('data'));
   return (
     <h1>Home Page</h1>
     // component for all boards / teams
