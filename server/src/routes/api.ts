@@ -5,10 +5,18 @@ import user from '../controllers/user';
 
 const router = express.Router()
 
+// get users from a specific board
+router.get('/boardUsers/:id', 
+  user.getUsersByBoard,
+  (req, res) => res.status(200).json(res.locals.users)
+)
+
 // get all users
 router.get('/users', 
   user.getAllUsers,
   (req, res) => res.status(200).json(res.locals.users)
 )
+
+
 
 export default router;

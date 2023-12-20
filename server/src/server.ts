@@ -12,11 +12,6 @@ app.use(cors());
 // client_ID = '207130399105-liobtrmdselqr1um3qe1188d2c2djnrn.apps.googleusercontent.com'
 // client_SECRET = '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'
 
-// test route
-app.get('/test',  testQueries.test,  (req: any, res: any) => {
-  res.status(200).json(res.locals.test)
-})
-
 // router
 app.use('/api', apiRouter);
 

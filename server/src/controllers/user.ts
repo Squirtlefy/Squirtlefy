@@ -14,6 +14,19 @@ const user = {
       console.log(e);
       return next(e);
     }
+  },
+
+  getUsersByBoard: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const users = await pool.query('SELECT scrumBoard.getUsersByBoard($1)', [id]);
+      console.log(users);
+      res.locals.users = users.rows;
+      return next();
+    } catch(e) {
+      console.log(e);
+      return next(e);
+    }
   }
 }
 
