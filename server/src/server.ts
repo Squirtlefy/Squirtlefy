@@ -68,6 +68,12 @@ app.get('/login', async (req: any, res: any) => {
   res.redirect(`http://localhost:5173/?data=${JSON.stringify(data)}`);
 });
 
+
+app.post('/getUser', (req: any, res: any) => {
+  res.status(200).send({ hi: 'hello'})
+});
+
+
 // basic error handler
 app.use((err, req, res, next) => {
   res.status(500).send('Error');
