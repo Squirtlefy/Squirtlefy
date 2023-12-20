@@ -59,7 +59,12 @@ router.post('/createList',
 router.post('/addUserToCard',
   card.addUser,
   (req, res) => res.sendStatus(200)
+)
 
+// remove user from card
+router.delete('/removeUserFromCard',
+  card.removeUser,
+  (req, res) => res.sendStatus(200)
 )
 
 // ----- //

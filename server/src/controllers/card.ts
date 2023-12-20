@@ -46,6 +46,15 @@ const card = {
       return next(err);
     }
   },
+  removeUser: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { cardId, userId } = req.body;
+      const result = await pool.query('CALL scrumboard.remove_user_from_card($1, $2)', [cardId, userId]);
+      return next();
+    } catch (err) {
+      return next(err);
+    }
+  },
 }
 
 export default card;
