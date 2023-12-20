@@ -44,6 +44,12 @@ router.patch('/listOrder',
   (req, res) => res.sendStatus(200)
 )
 
+// add new list **********
+router.post('/createList',
+  list.createList,
+  (req, res) => res.sendStatus(200)
+)
+
 // ----- //
 
 // createUser

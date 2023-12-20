@@ -15,6 +15,18 @@ const list = {
       return next(e);
     }
   },
+  createList: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { newListName, boardId } = req.body;
+      const data = await pool.query('CALL scrumboard.create_list($1, $2)', [newListName, boardId]);
+      console.log(data);
+      // maybe check for success?
+      return next();
+    } catch(e) {
+      console.log(e);
+      return next(e);
+    }
+  },
 
 }
 
