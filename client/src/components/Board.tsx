@@ -115,7 +115,6 @@ const Board = ({ curBoard }: { curBoard: BoardType }) => {
 
   return (
     <>
-      <h1>{board.name}</h1>
       <div className="board">
         {board.lists.map((list, listIndex) => {
           return (
