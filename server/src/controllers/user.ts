@@ -8,7 +8,7 @@ const user = {
       // get first 100 from res.locals and insert here
       const users = await pool.query('SELECT scrumBoard.getUsers()');
       console.log(users);
-      res.locals.users = users;
+      res.locals.users = users.rows;
       return next();
     } catch(e) {
       console.log(e);
