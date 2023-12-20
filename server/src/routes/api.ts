@@ -14,6 +14,11 @@ router.get('/users',
   (req, res) => res.status(200).json(res.locals.users)
 )
 
+router.get('/oneUser/:email', 
+  user.getOneUser,
+  (req, res) => res.status(200).json(res.locals.user)
+)
+
 // get users from a specific board
 router.get('/boardUsers/:boardId', 
   user.getUsersByBoard,
@@ -44,7 +49,7 @@ router.patch('/listOrder',
   (req, res) => res.sendStatus(200)
 )
 
-// add new list **********
+// add new list
 router.post('/createList',
   list.createList,
   (req, res) => res.sendStatus(200)

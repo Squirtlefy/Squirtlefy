@@ -29,6 +29,19 @@ const user = {
     }
   },
 
+  getOneUser: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { email } = req.params;
+      const user = await pool.query('SELECT scrumBoard.getoneuser($1)', [email]);
+      console.log(user);
+      res.locals.user = user.rows[0];
+      return next();
+    } catch(e) {
+      console.log(e);
+      return next(e);
+    }
+  },
+
   createUser: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { username, email, password } = req.body;
