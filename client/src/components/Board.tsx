@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef, FormEvent } from 'react';
+import editIcon from '../assets/edit-icon.png';
 
 // need to be able to scroll if it gets to the bottom of the screen
-// delete lists
-// delete cards
 
 const team = [
   'Austin Cavanagh',
@@ -49,6 +48,7 @@ const curBoard = {
 };
 
 const Board = () => {
+  const [board, setBoard] = useState(curBoard);
   const [addList, setAddList] = useState<boolean>(false);
   const [cardIndex, setCardIndex] = useState<null | number>(null);
 
@@ -96,16 +96,15 @@ const Board = () => {
 
     if (listInputRef.current) {
       const newListName = listInputRef.current.value;
-
       const newList = {
         name: newListName,
         cards: [],
       };
-
-      // send name of new list to database for creation
-      curBoard.lists.push(newList);
+      setBoard(prevBoard => ({
+        ...prevBoard,
+        lists: [...prevBoard.lists, newList],
+      }));
     }
-
     setAddList(false);
   };
 
@@ -114,45 +113,74 @@ const Board = () => {
 
     if (cardInputRef.current && cardIndex !== null) {
       const newCardName = cardInputRef.current.value;
-
-      console.log(newCardName);
-
       const newCard = {
         name: newCardName,
         people: [],
       };
-
-      // send name of new card to database for creation
-      curBoard.lists[cardIndex].cards.push(newCard);
+      setBoard(prevBoard => {
+        const updatedLists = [...prevBoard.lists];
+        updatedLists[cardIndex].cards.push(newCard);
+        return { ...prevBoard, lists: updatedLists };
+      });
     }
-
     if (cardInputRef.current) {
       cardInputRef.current.value = '';
     }
-
     setCardIndex(null);
+  };
+
+  const handleDeleteList = (listIndex: number) => {
+    const updatedLists = board.lists.filter((_, index) => index !== listIndex);
+    setBoard(prevBoard => ({ ...prevBoard, lists: updatedLists }));
+  };
+
+  const handleDeleteCard = (listIndex: number, cardIndex: number) => {
+    const updatedCards = board.lists[listIndex].cards.filter(
+      (_, index) => index !== cardIndex
+    );
+    setBoard(prevBoard => {
+      const updatedLists = [...prevBoard.lists];
+      updatedLists[listIndex].cards = updatedCards;
+      return { ...prevBoard, lists: updatedLists };
+    });
   };
 
   return (
     <>
-      <h1>{curBoard.name}</h1>
+      <h1>{board.name}</h1>
       <div className="board">
-        {curBoard.lists.map((list, index) => {
+        {board.lists.map((list, listIndex) => {
           return (
-            <div className="list" key={index}>
-              <div className="list-name">{list.name}</div>
-              {list.cards.map((card, index) => {
+            <div className="list" key={listIndex}>
+              <div className="list-header">
+                <div className="list-name">{list.name}</div>
+                <button
+                  className="list-delete-button"
+                  onClick={() => handleDeleteList(listIndex)}
+                >
+                  ...
+                </button>
+              </div>
+
+              {list.cards.map((card, cardIndex) => {
                 return (
-                  <div className="card" key={index}>
-                    {card.name}
+                  <div className="card" key={cardIndex}>
+                    <div className="card-title">{card.name}</div>
+                    <button
+                      className="list-delete-button edit-icon"
+                      onClick={() => handleDeleteCard(listIndex, cardIndex)}
+                      style={{ backgroundImage: editIcon }}
+                    >
+                      ...
+                    </button>
                   </div>
                 );
               })}
 
-              {cardIndex !== index ? (
+              {cardIndex !== listIndex ? (
                 <button
                   className="card add-card-button"
-                  onClick={() => setCardIndex(index)}
+                  onClick={() => setCardIndex(listIndex)}
                 >
                   + Add Card
                 </button>

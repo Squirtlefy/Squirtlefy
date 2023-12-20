@@ -29,14 +29,6 @@
   align-self: start;
 }
 
-.list-name {
-  width: 100%;
-  padding: 0.5rem;
-  font-weight: 500;
-  color: #b6c2cfff;
-  cursor: pointer;
-}
-
 .add-list-button {
   height: auto;
   width: 14rem;
@@ -62,13 +54,19 @@
 
 .card {
   width: 100%;
-  padding: 0.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin: 0.25rem 0rem;
   color: #b6c2cfff;
   background-color: #22272bff;
   border-radius: 0.4rem;
   cursor: pointer;
   border: 2px solid transparent;
+}
+
+.card-title {
+  padding: 0.6rem;
 }
 
 .card:hover {
@@ -148,4 +146,45 @@
 
 .new-card-form {
   padding: 0.4rem;
+}
+
+.list-header {
+  height: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-name {
+  padding: 0.5rem;
+  font-weight: 500;
+  color: #b6c2cfff;
+  flex-grow: 1;
+}
+
+.list-delete-button {
+  height: 2rem;
+  width: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: top;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  background-color: transparent;
+  border-radius: 0.2rem;
+  color: #b6c2cfff;
+  background-size: cover;
+  background-position: center;
+}
+
+.list-delete-button:hover {
+  background-color: #22272bff;
+}
+
+.edit-icon:hover {
+  background-color: #6e6e6e;
+  border-radius: 50%;
 }
