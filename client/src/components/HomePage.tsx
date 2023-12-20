@@ -1,45 +1,50 @@
 import { BoardType } from '../types';
 import Board from './Board';
 import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 
 // placeholder for initial board data from database
 // should have GET request to get current board
 const curBoard: BoardType = {
+  name: 'Reinforcement Project',
   name: 'Board 1',
   boardId: 1,
   lists: [
     {
-      name: 'List 1',
+      name: 'To Do',
       cards: [
-        { name: 'Card 1', people: ['AC'] },
-        { name: 'Card 2', people: ['JT'] },
-        { name: 'Card 3', people: ['JD'] },
-        { name: 'Card 4', people: ['KW'] },
-        { name: 'Card 5', people: ['SK'] },
+        { name: 'Task 1', people: ['AC'] },
+        { name: 'Task 2', people: ['JT'] },
+        { name: 'Task 3', people: ['JD'] },
       ],
     },
     {
-      name: 'List 2',
+      name: 'In Progress',
       cards: [
-        { name: 'Card 1', people: ['AC'] },
-        { name: 'Card 2', people: ['JT'] },
-        { name: 'Card 3', people: ['JD'] },
-        { name: 'Card 4', people: ['KW'] },
-        { name: 'Card 5', people: ['SK'] },
+        { name: 'Task 1', people: ['AC'] },
+        { name: 'Task 2', people: ['JT'] },
+        { name: 'Task 3', people: ['JD'] },
       ],
     },
     {
-      name: 'List 3',
+      name: 'Complete',
       cards: [
-        { name: 'Card 1', people: ['AC'] },
-        { name: 'Card 2', people: ['JT'] },
-        { name: 'Card 3', people: ['JD'] },
-        { name: 'Card 4', people: ['KW'] },
-        { name: 'Card 5', people: ['SK'] },
+        { name: 'Task 1', people: ['AC'] },
+        { name: 'Task 2', people: ['JT'] },
+        { name: 'Task 3', people: ['JD'] },
       ],
     },
   ],
 };
+
+// placeholder for boards
+const boards = [
+  'Solo Project',
+  'Scratch Project',
+  'Iteration Project',
+  'Open Source Project',
+  'Reinforcement Project',
+];
 
 const fetchBoarData = async () => {
   const res = await fetch('http://localhost:3000/api/boardData/1')
@@ -47,6 +52,12 @@ const fetchBoarData = async () => {
 }
 
 const HomePage = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   const { data } = useQuery({
     queryKey: ['board1'],
     queryFn: fetchBoarData,
@@ -55,12 +66,27 @@ const HomePage = () => {
   console.log(data);
   if (data) return (
     <>
-      <h1>Home Page</h1>
-      <Board curBoard={data} />
+      <div className="nav-bar">Squirtlefy</div>
+      <div className={`main-container ${isMenuOpen ? 'shifted' : ''}`}>
+        <div className={`side-menu ${isMenuOpen ? 'open' : ''}`}>
+          {/* <div>Boards</div> */}
+          {boards.map(board => {
+            if (board === 'Reinforcement Project') {
+              return <div className="board-item picked">{board}</div>;
+            } else {
+              return <div className="board-item">{board}</div>;
+            }
+          })}
+        </div>
+        <div className="content">
+          <button className="menu-toggle" onClick={toggleMenu}>
+            {isMenuOpen === false ? '>' : '<'}
+          </button>
+          <div className="board-title">{curBoard.name}</div>
+          <Board curBoard={data} />
+        </div>
+      </div>
     </>
-    // component for all boards / teams
-    // component for screen that pops up when we create the board
-    // current selected board
   );
 };
 
