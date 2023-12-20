@@ -4,7 +4,7 @@ import express, { Request, Response, NextFunction } from "express";
 import testQueries from './database/testCalls'
 import apiRouter from './routes/api'
 
-const PORT = 3001;
+const PORT = 3000;
 const app = express();
 
 app.use(express.json());
