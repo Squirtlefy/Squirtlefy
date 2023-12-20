@@ -51,7 +51,7 @@ app.get('/login', async (req: any, res: any) => {
   oauth2Client.setCredentials(tokens);
 
   const response = await fetch(
-    `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${tokens}`
+    `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${tokens.access_token}`
   );
 
   const data = await response.json();
