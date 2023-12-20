@@ -5,7 +5,7 @@ import { Request, Response, NextFunction } from "express";
 const list = {
   updateOrder: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { listId, newOrder } = req.query;
+      const { listId, newOrder } = req.body;
       const data = await pool.query('CALL scrumboard.updatelistorder($1, $2)', [listId, newOrder]);
       console.log(data);
       // maybe check for success?
