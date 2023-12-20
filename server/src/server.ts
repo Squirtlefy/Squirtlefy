@@ -1,6 +1,7 @@
 const { google } = require('googleapis');
 const cors = require('cors');
 require('dotenv').config();
+const user = require('./controllers/user')
 import express, { Request, Response, NextFunction } from "express";
 import testQueries from './database/testCalls'
 import apiRouter from './routes/api'
@@ -59,6 +60,12 @@ app.get('/login', async (req: any, res: any) => {
   );
   const data = await response.json();
   console.log('data: ', data);
+
+  const result = await user.createUser(data.name, data.email, data.id, data.picture);
+  console.log(result);
+  if (result === -1) {
+    res.status(500).send('Error creating user');
+  }
 
   res.redirect(`http://localhost:5173/?data=${JSON.stringify(data)}`);
 });
