@@ -1,5 +1,9 @@
 import { useState, useEffect, useRef, FormEvent } from 'react';
 
+// need to be able to scroll if it gets to the bottom of the screen
+// delete lists
+// delete cards
+
 const team = [
   'Austin Cavanagh',
   'Jerry Trinh',
@@ -12,33 +16,33 @@ const curBoard = {
   name: 'Board 1',
   lists: [
     {
-      name: 'Card 1',
+      name: 'List 1',
       cards: [
-        { name: 'Task 1', people: ['AC'] },
-        { name: 'Task 2', people: ['JT'] },
-        { name: 'Task 3', people: ['JD'] },
-        { name: 'Task 4', people: ['KW'] },
-        { name: 'Task 5', people: ['SK'] },
+        { name: 'Card 1', people: ['AC'] },
+        { name: 'Card 2', people: ['JT'] },
+        { name: 'Card 3', people: ['JD'] },
+        { name: 'Card 4', people: ['KW'] },
+        { name: 'Card 5', people: ['SK'] },
       ],
     },
     {
-      name: 'Card 2',
+      name: 'List 2',
       cards: [
-        { name: 'Task 1', people: ['AC'] },
-        { name: 'Task 2', people: ['JT'] },
-        { name: 'Task 3', people: ['JD'] },
-        { name: 'Task 4', people: ['KW'] },
-        { name: 'Task 5', people: ['SK'] },
+        { name: 'Card 1', people: ['AC'] },
+        { name: 'Card 2', people: ['JT'] },
+        { name: 'Card 3', people: ['JD'] },
+        { name: 'Card 4', people: ['KW'] },
+        { name: 'Card 5', people: ['SK'] },
       ],
     },
     {
-      name: 'Card 3',
+      name: 'List 3',
       cards: [
-        { name: 'Task 1', people: ['AC'] },
-        { name: 'Task 2', people: ['JT'] },
-        { name: 'Task 3', people: ['JD'] },
-        { name: 'Task 4', people: ['KW'] },
-        { name: 'Task 5', people: ['SK'] },
+        { name: 'Card 1', people: ['AC'] },
+        { name: 'Card 2', people: ['JT'] },
+        { name: 'Card 3', people: ['JD'] },
+        { name: 'Card 4', people: ['KW'] },
+        { name: 'Card 5', people: ['SK'] },
       ],
     },
   ],
