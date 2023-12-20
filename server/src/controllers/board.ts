@@ -16,6 +16,15 @@ const board = {
     }
   },
 
+  createBoard:  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { new_board_name, original_user_id } = req.query;
+      const result = await pool.query('CALL scrumboard.create_Board($1, $2)', [new_board_name, original_user_id]);
+      return res.json(result);
+    } catch (err) {
+      return next(err);
+    }
+  }
 }
 
 export default board;

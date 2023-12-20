@@ -15,6 +15,27 @@ const card = {
     }
   },
 
+  createCard: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { cardTitle, categoryID } = req.body;
+      const result = await pool.query('CALL scrumboard.create_card($1, $2)', [cardTitle, categoryID]);
+      console.log(result);
+      return res.json(result);
+    } catch (err) {
+      console.log(err);
+      return next(err);
+    }
+  },
+
+  deleteCard: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { cardId } = req.body;
+      const result = await pool.query('CALL scrumboard.delete_card($1)', [cardId]);
+      return res.json(result);
+    } catch (err) {
+      return next(err);
+    }
+  }
 }
 
 export default card;
