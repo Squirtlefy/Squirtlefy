@@ -17,7 +17,7 @@ app.get('/test',  testQueries.test,  (req: any, res: any) => {
   res.status(200).json(res.locals.test)
 })
 
-// first router
+// router
 app.use('/api', apiRouter);
 
 
