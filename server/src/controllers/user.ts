@@ -31,8 +31,8 @@ const user = {
 
   createUser: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { username, email, password } = req.body;
-      const result = await pool.query('CALL scrumBoard.create_User($1, $2, $3)', [username, email, password]);
+      const { name, email, user_ID, picture } = req.body;
+      const result = await pool.query('CALL scrumBoard.create_User($1, $2, $3, $4)', [name, email, user_ID, picture]);
       return res.json(result);
     } catch (err) {
       return next(err);
