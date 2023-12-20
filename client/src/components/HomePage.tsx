@@ -10,25 +10,25 @@ const curBoard: BoardType = {
     {
       name: 'To Do',
       cards: [
-        { name: 'Card 1', people: ['AC'] },
-        { name: 'Card 2', people: ['JT'] },
-        { name: 'Card 3', people: ['JD'] },
+        { name: 'Task 1', people: ['AC'] },
+        { name: 'Task 2', people: ['JT'] },
+        { name: 'Task 3', people: ['JD'] },
       ],
     },
     {
       name: 'In Progress',
       cards: [
-        { name: 'Card 1', people: ['AC'] },
-        { name: 'Card 2', people: ['JT'] },
-        { name: 'Card 3', people: ['JD'] },
+        { name: 'Task 1', people: ['AC'] },
+        { name: 'Task 2', people: ['JT'] },
+        { name: 'Task 3', people: ['JD'] },
       ],
     },
     {
       name: 'Complete',
       cards: [
-        { name: 'Card 1', people: ['AC'] },
-        { name: 'Card 2', people: ['JT'] },
-        { name: 'Card 3', people: ['JD'] },
+        { name: 'Task 1', people: ['AC'] },
+        { name: 'Task 2', people: ['JT'] },
+        { name: 'Task 3', people: ['JD'] },
       ],
     },
   ],
@@ -57,7 +57,11 @@ const HomePage = () => {
         <div className={`side-menu ${isMenuOpen ? 'open' : ''}`}>
           {/* <div>Boards</div> */}
           {boards.map(board => {
-            return <div className="board-item">{board}</div>;
+            if (board === 'Reinforcement Project') {
+              return <div className="board-item picked">{board}</div>;
+            } else {
+              return <div className="board-item">{board}</div>;
+            }
           })}
         </div>
         <div className="content">
