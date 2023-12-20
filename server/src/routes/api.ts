@@ -44,4 +44,42 @@ router.patch('/listOrder',
   (req, res) => res.sendStatus(200)
 )
 
+// ----- //
+
+// createUser
+router.post('/createUser',
+  user.createUser,
+  (req, res) => res.sendStatus(200)
+)
+
+// createBoard
+router.post('/createBoard',
+  board.createBoard,
+  (req, res) => res.sendStatus(200)
+)
+
+// addUserToBoard
+router.patch('/addUserToBoard',
+  user.addUserToBoard,
+  (req, res) => res.sendStatus(200)
+)
+
+// removeUserfromBoard
+router.patch('/removeUserfromBoard',
+  user.removeUserfromBoard,
+  (req, res) => res.sendStatus(200)
+)
+
+// createCard
+router.post('/createCard',
+  card.createCard,
+  (req, res) => res.sendStatus(200)
+)
+
+// deleteCard
+router.delete('/deleteCard/:cardId',
+  card.deleteCard,
+  (req, res) => res.sendStatus(200)
+)
+
 export default router;
