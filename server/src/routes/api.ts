@@ -55,6 +55,13 @@ router.post('/createList',
   (req, res) => res.sendStatus(200)
 )
 
+// add a user to card
+router.post('/addUserToCard',
+  card.addUser,
+  (req, res) => res.sendStatus(200)
+
+)
+
 // ----- //
 
 // createUser

@@ -35,7 +35,17 @@ const card = {
     } catch (err) {
       return next(err);
     }
-  }
+  },
+
+  addUser: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { cardId, userId } = req.body;
+      const result = await pool.query('CALL scrumboard.add_user_to_card($1, $2)', [cardId, userId]);
+      return next();
+    } catch (err) {
+      return next(err);
+    }
+  },
 }
 
 export default card;
