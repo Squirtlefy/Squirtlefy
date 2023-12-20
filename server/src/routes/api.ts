@@ -27,7 +27,7 @@ router.get('/boardUsers/:boardId',
 
 // get all data for a board
 router.get('/boardData/:boardId', 
-  board.getAllData,
+  board.getAllBoardData,
   (req, res) => res.status(200).json(res.locals.data)
 )
 

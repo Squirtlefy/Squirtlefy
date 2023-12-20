@@ -12,6 +12,11 @@ app.use(cors());
 // client_ID = '207130399105-liobtrmdselqr1um3qe1188d2c2djnrn.apps.googleusercontent.com'
 // client_SECRET = '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'
 
+// handle cors error by specifying the server
+app.use(cors({
+  origin: 'http://localhost:5173'
+}));
+
 // router
 app.use('/api', apiRouter);
 
