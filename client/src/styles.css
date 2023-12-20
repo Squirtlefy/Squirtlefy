@@ -145,3 +145,7 @@
 .cancel-button:hover {
   background-color: #22272bff;
 }
+
+.new-card-form {
+  padding: 0.4rem;
+}

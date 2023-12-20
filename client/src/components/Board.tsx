@@ -10,10 +10,10 @@ const team = [
 
 const curBoard = {
   name: 'Board 1',
-  cards: [
+  lists: [
     {
       name: 'Card 1',
-      tasks: [
+      cards: [
         { name: 'Task 1', people: ['AC'] },
         { name: 'Task 2', people: ['JT'] },
         { name: 'Task 3', people: ['JD'] },
@@ -23,7 +23,7 @@ const curBoard = {
     },
     {
       name: 'Card 2',
-      tasks: [
+      cards: [
         { name: 'Task 1', people: ['AC'] },
         { name: 'Task 2', people: ['JT'] },
         { name: 'Task 3', people: ['JD'] },
@@ -33,7 +33,7 @@ const curBoard = {
     },
     {
       name: 'Card 3',
-      tasks: [
+      cards: [
         { name: 'Task 1', people: ['AC'] },
         { name: 'Task 2', people: ['JT'] },
         { name: 'Task 3', people: ['JD'] },
@@ -45,16 +45,20 @@ const curBoard = {
 };
 
 const Board = () => {
-  const [addList, setAddList] = useState(false);
-  const [addCard, setAddCard] = useState(false);
+  const [addList, setAddList] = useState<boolean>(false);
+  const [cardIndex, setCardIndex] = useState<null | number>(null);
 
-  const formRef = useRef<HTMLFormElement>(null);
+  const listFormRef = useRef<HTMLFormElement>(null);
+  const cardFormRef = useRef<HTMLFormElement>(null);
   const listInputRef = useRef<HTMLInputElement>(null);
   const cardInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (formRef.current && !formRef.current.contains(event.target as Node)) {
+      if (
+        listFormRef.current &&
+        !listFormRef.current.contains(event.target as Node)
+      ) {
         setAddList(false);
       }
     }
@@ -64,40 +68,109 @@ const Board = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [formRef]);
+  }, [listFormRef]);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        cardFormRef.current &&
+        !cardFormRef.current.contains(event.target as Node)
+      ) {
+        setCardIndex(null);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [cardFormRef]);
 
   const handleNewList = (event: FormEvent) => {
     event.preventDefault();
 
     if (listInputRef.current) {
-      console.log(listInputRef.current.value);
+      const newListName = listInputRef.current.value;
+
+      const newList = {
+        name: newListName,
+        cards: [],
+      };
+
+      // send name of new list to database for creation
+      curBoard.lists.push(newList);
     }
 
     setAddList(false);
-    return;
+  };
+
+  const handleNewCard = (event: FormEvent) => {
+    event.preventDefault();
+
+    if (cardInputRef.current && cardIndex !== null) {
+      const newCardName = cardInputRef.current.value;
+
+      console.log(newCardName);
+
+      const newCard = {
+        name: newCardName,
+        people: [],
+      };
+
+      // send name of new card to database for creation
+      curBoard.lists[cardIndex].cards.push(newCard);
+    }
+
+    if (cardInputRef.current) {
+      cardInputRef.current.value = '';
+    }
+
+    setCardIndex(null);
   };
 
   return (
     <>
       <h1>{curBoard.name}</h1>
       <div className="board">
-        {curBoard.cards.map((card, index) => {
+        {curBoard.lists.map((list, index) => {
           return (
             <div className="list" key={index}>
-              <div className="list-name">{card.name}</div>
-              {card.tasks.map((card, index) => {
+              <div className="list-name">{list.name}</div>
+              {list.cards.map((card, index) => {
                 return (
                   <div className="card" key={index}>
                     {card.name}
                   </div>
                 );
               })}
-              <button
-                className="card add-card-button"
-                onClick={() => setAddCard(true)}
-              >
-                + Add Card
-              </button>
+
+              {cardIndex !== index ? (
+                <button
+                  className="card add-card-button"
+                  onClick={() => setCardIndex(index)}
+                >
+                  + Add Card
+                </button>
+              ) : (
+                <form
+                  className="new-card-form"
+                  onSubmit={handleNewCard}
+                  ref={cardFormRef}
+                >
+                  <input
+                    className="add-list-input"
+                    ref={cardInputRef}
+                    type="text"
+                    placeholder="Enter Card Name..."
+                    autoFocus
+                  />
+                  <div className="add-list-bottom">
+                    <button className="submit-button">Add List</button>
+                    <button className="cancel-button">X</button>
+                  </div>
+                </form>
+              )}
             </div>
           );
         })}
@@ -107,7 +180,7 @@ const Board = () => {
             + Add List
           </button>
         ) : (
-          <form className="list" onSubmit={handleNewList} ref={formRef}>
+          <form className="list" onSubmit={handleNewList} ref={listFormRef}>
             <input
               className="add-list-input"
               ref={listInputRef}
