@@ -1,8 +1,9 @@
 const { google } = require('googleapis');
-const express = require('express');
 const cors = require('cors');
-const PORT = 3000;
+import express, { Request, Response, NextFunction } from "express";
+import testQueries from './database/testCalls'
 
+const PORT = 3000;
 const app = express();
 
 app.use(express.json());
@@ -60,8 +61,19 @@ app.get('/login', async (req: any, res: any) => {
   res.redirect('http://localhost:5173/');
 });
 
+// test route
+app.get('/test',  testQueries.test,  (req: any, res: any) => {
+  res.status(200).json(res.locals.test)
+})
+
+// basic error handler
+app.use((err, req, res, next) => {
+  res.status(500).send('Error');
+});
+
+
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
 
-module.exports = app;
+export default app;
