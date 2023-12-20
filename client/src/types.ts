@@ -10,5 +10,6 @@ export type List = {
 
 export type BoardType = {
   name: string;
+  boardId: number;
   lists: List[];
 };
