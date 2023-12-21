@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, FormEvent } from 'react';
 import { BoardType } from '../types';
+import { useMutation, useQueryClient} from '@tanstack/react-query';
 
 const Board = ({ curBoard }: { curBoard: BoardType }) => {
   const [board, setBoard] = useState(curBoard);
@@ -10,6 +11,27 @@ const Board = ({ curBoard }: { curBoard: BoardType }) => {
   const cardFormRef = useRef<HTMLFormElement>(null);
   const listInputRef = useRef<HTMLInputElement>(null);
   const cardInputRef = useRef<HTMLInputElement>(null);
+
+  // const queryClient = useQueryClient();
+  // const addCardFunc = async (cardTitle: string, categoryID: number) => {
+  //   const res = await fetch('http://localhost:3000/api/createCard', {
+  //     method: 'POST',
+  //     headers: {
+  //       Accept: 'application.json',
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({ cardTitle, categoryID })
+  //   })
+  //   return res.json();
+  // }
+
+  // const addCard = useMutation({
+  //   mutationFn: addCardFunc,
+  //   onSuccess: () => {
+  //     // Invalidate and refetch
+  //     queryClient.invalidateQueries({ queryKey: ['board1'] })
+  //   }
+  // })
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {

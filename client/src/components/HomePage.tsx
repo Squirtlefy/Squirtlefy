@@ -7,7 +7,6 @@ import { useState } from 'react';
 // should have GET request to get current board
 const curBoard: BoardType = {
   name: 'Reinforcement Project',
-  name: 'Board 1',
   boardId: 1,
   lists: [
     {
@@ -46,7 +45,7 @@ const boards = [
   'Reinforcement Project',
 ];
 
-const fetchBoarData = async () => {
+const fetchBoardData = async () => {
   const res = await fetch('http://localhost:3000/api/boardData/1')
   return res.json();
 }
@@ -60,7 +59,7 @@ const HomePage = () => {
 
   const { data } = useQuery({
     queryKey: ['board1'],
-    queryFn: fetchBoarData,
+    queryFn: fetchBoardData,
   })
 
   console.log(data);
