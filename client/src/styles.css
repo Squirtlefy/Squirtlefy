@@ -5,13 +5,25 @@
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+body {
+  background-color: #00ff00;
+}
+
 .board {
   display: flex;
   justify-content: left;
   align-items: top;
   padding: 1rem;
-  background-color: lightgray;
-  font-size: 0.9rem;
+  background-color: transparent;
+  font-size: 1rem;
+}
+
+.board-title {
+  margin-left: 2rem;
+  /* margin-top: 2rem; */
+  font-weight: 500;
+  color: white;
+  font-size: 24pt;
 }
 
 .list {
@@ -45,7 +57,7 @@
   font-weight: 500;
   align-self: start;
   border: none;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .add-list-button:hover {
@@ -79,7 +91,7 @@
   cursor: pointer;
   font-weight: 500;
   border: none;
-  font-size: 0.9rem;
+  font-size: 1rem;
   border: 2px solid transparent;
 }
 
@@ -91,7 +103,7 @@
 .add-list-input {
   width: 100%;
   border: 2px solid transparent;
-  font-size: 0.9rem;
+  font-size: 1rem;
   outline: none;
   padding: 0.5rem;
   border-radius: 0.3rem;
@@ -121,7 +133,7 @@
 .submit-button {
   padding: 0.4rem;
   background-color: #579dffff;
-  font-size: 0.9rem;
+  font-size: 1rem;
   border: 2px solid transparent;
   color: #1e2226ff;
   border-radius: 0.25rem;
@@ -131,7 +143,7 @@
 
 .cancel-button {
   padding: 0.4rem 0.7rem;
-  font-size: 0.9rem;
+  font-size: 1rem;
   border: 2px solid transparent;
   margin-left: 0.5rem;
   border-radius: 0.25rem;
@@ -187,4 +199,91 @@
 .edit-icon:hover {
   background-color: #6e6e6e;
   border-radius: 50%;
+}
+
+.nav-bar {
+  width: 100%;
+  background-color: #1e2226ff;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  color: white;
+  padding: 1.2rem;
+  font-size: 35pt;
+  font-weight: 500;
+}
+
+.nav-bar {
+  /* Your existing navbar styles here */
+  /* Ensure no background color is set here that you don't want */
+}
+
+.main-container {
+  transition: margin-left 0.5s;
+  /* Ensure no background color is set here that you don't want */
+}
+
+.shifted {
+  margin-left: 250px; /* Adjust based on sidebar width */
+}
+
+.side-menu {
+  position: fixed;
+  top: 100;
+  left: -250px; /* Adjust based on sidebar width */
+  width: 250px; /* Adjust based on sidebar width */
+  height: 100%;
+  transition: left 0.5s;
+  background-color: #2a2c2eff;
+}
+
+.side-menu.open {
+  left: 0;
+  /* padding: 1.2rem; */
+}
+
+.content {
+  /* Styles for your main content */
+}
+
+.menu-toggle {
+  height: 2rem;
+  width: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: top;
+  border: none;
+  cursor: pointer;
+  font-size: 2rem;
+  line-height: 1.5rem;
+  background-color: transparent;
+  border-radius: 0.2rem;
+  color: #b6c2cfff;
+  background-size: cover;
+  background-position: center;
+}
+
+.board-item {
+  color: #a0aebdff;
+  font-weight: 500;
+  font-size: 14pt;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.board-item:hover {
+  background-color: #515254ff;
+}
+
+.picked {
+  background-color: #515254ff;
+}
+
+.form-container {
+  background-color: rgba(0,255,0,255);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

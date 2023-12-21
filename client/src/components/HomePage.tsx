@@ -2,47 +2,53 @@ import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { BoardType } from '../types';
 import Board from './Board';
+import { useState } from 'react';
 
 // placeholder for initial board data from database
 // should have GET request to get current board
 const curBoard: BoardType = {
-  name: 'Board 1',
+  name: 'Reinforcement Project',
   lists: [
     {
-      name: 'List 1',
+      name: 'To Do',
       cards: [
-        { name: 'Card 1', people: ['AC'] },
-        { name: 'Card 2', people: ['JT'] },
-        { name: 'Card 3', people: ['JD'] },
-        { name: 'Card 4', people: ['KW'] },
-        { name: 'Card 5', people: ['SK'] },
+        { name: 'Task 1', people: ['AC'] },
+        { name: 'Task 2', people: ['JT'] },
+        { name: 'Task 3', people: ['JD'] },
       ],
     },
     {
-      name: 'List 2',
+      name: 'In Progress',
       cards: [
-        { name: 'Card 1', people: ['AC'] },
-        { name: 'Card 2', people: ['JT'] },
-        { name: 'Card 3', people: ['JD'] },
-        { name: 'Card 4', people: ['KW'] },
-        { name: 'Card 5', people: ['SK'] },
+        { name: 'Task 1', people: ['AC'] },
+        { name: 'Task 2', people: ['JT'] },
+        { name: 'Task 3', people: ['JD'] },
       ],
     },
     {
-      name: 'List 3',
+      name: 'Complete',
       cards: [
-        { name: 'Card 1', people: ['AC'] },
-        { name: 'Card 2', people: ['JT'] },
-        { name: 'Card 3', people: ['JD'] },
-        { name: 'Card 4', people: ['KW'] },
-        { name: 'Card 5', people: ['SK'] },
+        { name: 'Task 1', people: ['AC'] },
+        { name: 'Task 2', people: ['JT'] },
+        { name: 'Task 3', people: ['JD'] },
       ],
     },
   ],
 };
 
+// placeholder for boards
+const boards = [
+  'Solo Project',
+  'Scratch Project',
+  'Iteration Project',
+  'Open Source Project',
+  'Reinforcement Project',
+];
+
 const HomePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   useEffect(() => {
     const params = searchParams.get('data');
     console.log('params: ', params)
@@ -50,14 +56,34 @@ const HomePage = () => {
       .then((response) => response.json())
       .then((data) => console.log(data));
   }, [searchParams]);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <>
-      <h1>Home Page</h1>
-      <Board curBoard={curBoard} />
+      <div className="nav-bar">Squirtlefy</div>
+      <div className={`main-container ${isMenuOpen ? 'shifted' : ''}`}>
+        <div className={`side-menu ${isMenuOpen ? 'open' : ''}`}>
+          {/* <div>Boards</div> */}
+          {boards.map(board => {
+            if (board === 'Reinforcement Project') {
+              return <div className="board-item picked">{board}</div>;
+            } else {
+              return <div className="board-item">{board}</div>;
+            }
+          })}
+        </div>
+        <div className="content">
+          <button className="menu-toggle" onClick={toggleMenu}>
+            {isMenuOpen === false ? '>' : '<'}
+          </button>
+          <div className="board-title">{curBoard.name}</div>
+          <Board curBoard={curBoard} />
+        </div>
+      </div>
     </>
-    // component for all boards / teams
-    // component for screen that pops up when we create the board
-    // current selected board
   );
 };
 
