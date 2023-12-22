@@ -6,7 +6,7 @@
 }
 
 body {
-  background-color: #944068ff;
+  background-color: #00ff00;
 }
 
 .board {
@@ -277,4 +277,13 @@ body {
 
 .picked {
   background-color: #515254ff;
+}
+
+.form-container {
+  background-color: rgba(0,255,0,255);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

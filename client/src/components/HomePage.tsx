@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { BoardType } from '../types';
 import Board from './Board';
 import { useState } from 'react';
@@ -44,7 +46,16 @@ const boards = [
 ];
 
 const HomePage = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const params = searchParams.get('data');
+    console.log('params: ', params)
+    fetch(`http://localhost:3000/api/oneUser/${params}`)
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  }, [searchParams]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);

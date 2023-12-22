@@ -1,30 +1,34 @@
 const { google } = require('googleapis');
 const cors = require('cors');
-import express, { Request, Response, NextFunction } from "express";
-import testQueries from './database/testCalls'
-import apiRouter from './routes/api'
+require('dotenv').config();
+import user from './controllers/user';
+import express, { Request, Response, NextFunction } from 'express';
+import testQueries from './database/testCalls';
+import apiRouter from './routes/api';
 
 const PORT = 3000;
 const app = express();
 
 app.use(express.json());
 app.use(cors());
-// client_ID = '207130399105-liobtrmdselqr1um3qe1188d2c2djnrn.apps.googleusercontent.com'
-// client_SECRET = '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'
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+  })
+);
 
 // router
 app.use('/api', apiRouter);
 
-
 const oauth2Client = new google.auth.OAuth2(
-  '207130399105-liobtrmdselqr1um3qe1188d2c2djnrn.apps.googleusercontent.com',
-  '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',
+  process.env.CLIENT_ID,
+  process.env.CLIENT_SECRET,
   'http://localhost:3000/login'
 );
 
 // set auth as a global default
 google.options({
-  auth: oauth2Client
+  auth: oauth2Client,
 });
 
 oauth2Client.on('tokens', (tokens) => {
@@ -51,7 +55,6 @@ app.get('/', (req: any, res: any) => {
 });
 
 app.get('/login', async (req: any, res: any) => {
-  console.log(req.query);
   const { code } = req.query;
   const { tokens } = await oauth2Client.getToken(code);
   oauth2Client.setCredentials(tokens);
@@ -59,18 +62,28 @@ app.get('/login', async (req: any, res: any) => {
   const response = await fetch(
     `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${tokens.access_token}`
   );
-
   const data = await response.json();
   console.log('data: ', data);
 
-  res.redirect('http://localhost:5173/');
+  const result = await user.createUser(
+    data.name,
+    data.email,
+    data.id,
+    data.picture
+  );
+  console.log(result);
+
+  if (result === -1) {
+    res.status(500).send('Error creating user');
+  }
+
+  res.redirect(`http://localhost:5173/?data=${JSON.stringify(data.email)}`);
 });
 
 // basic error handler
 app.use((err, req, res, next) => {
   res.status(500).send('Error');
 });
-
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);

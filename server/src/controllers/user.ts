@@ -1,6 +1,6 @@
 import exp from 'constants';
 import pool from '../database/connection';
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from 'express';
 
 const user = {
   getAllUsers: async (req: Request, res: Response, next: NextFunction) => {
@@ -10,7 +10,7 @@ const user = {
       console.log(users);
       res.locals.users = users.rows;
       return next();
-    } catch(e) {
+    } catch (e) {
       console.log(e);
       return next(e);
     }
@@ -19,11 +19,13 @@ const user = {
   getUsersByBoard: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { boardId } = req.params;
-      const users = await pool.query('SELECT scrumBoard.getUsersByBoard($1)', [boardId]);
+      const users = await pool.query('SELECT scrumBoard.getUsersByBoard($1)', [
+        boardId,
+      ]);
       console.log(users);
       res.locals.users = users.rows;
       return next();
-    } catch(e) {
+    } catch (e) {
       console.log(e);
       return next(e);
     }
@@ -32,45 +34,61 @@ const user = {
   getOneUser: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email } = req.params;
-      const user = await pool.query('SELECT scrumBoard.getoneuser($1)', [email]);
-      console.log(user);
-      res.locals.user = user.rows[0];
+      // const email = 'keidy@gmail.com';
+      console.log('email: ', email.slice(1, email.length - 1));
+      const user = await pool.query('SELECT scrumBoard.getoneuser($1)', [
+        email.slice(1, email.length - 1),
+      ]);
+      console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@: ', user.rows[0].getoneuser);
+      res.locals.user = user.rows[0].getOneUser;
       return next();
-    } catch(e) {
+    } catch (e) {
       console.log(e);
       return next(e);
     }
   },
 
-  createUser: async (req: Request, res: Response, next: NextFunction) => {
+  createUser: async (name, email, userId, pictureURL) => {
     try {
-      const { username, email, password } = req.body;
-      const result = await pool.query('CALL scrumBoard.create_User($1, $2, $3)', [username, email, password]);
-      return res.json(result);
+      const result = await pool.query(
+        'CALL scrumBoard.create_User($1, $2, $3, $4)',
+        [name, email, userId, pictureURL]
+      );
+      return result;
     } catch (err) {
-      return next(err);
+      return -1;
     }
   },
 
   addUserToBoard: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { board_id, selected_user_ids } = req.body;
-      const result = await pool.query('CALL scrumBoard.add_users_to_board($1, $2)', [board_id, selected_user_ids]);
+      const result = await pool.query(
+        'CALL scrumBoard.add_users_to_board($1, $2)',
+        [board_id, selected_user_ids]
+      );
       return res.json(result);
     } catch (err) {
       return next(err);
     }
   },
 
-  removeUserfromBoard: async (req: Request, res: Response, next: NextFunction) => {
+  removeUserfromBoard: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
       const { boardId, userId } = req.body;
-      const result = await pool.query('CALL scrumBoard.remove_user_from_board($1, $2)', [boardId, userId]);
+      const result = await pool.query(
+        'CALL scrumBoard.remove_user_from_board($1, $2)',
+        [boardId, userId]
+      );
       return res.json(result);
     } catch (err) {
       return next(err);
     }
-  }
-}
+  },
+};
 
 export default user;
